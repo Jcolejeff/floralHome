@@ -9,6 +9,7 @@ export class Flower {
   price: u128;
   quantity: u32;
   owner: string;
+  sold: bool;
 
   public static fromPayload(payload: Flower): Flower {
     const flower = new Flower();
@@ -19,6 +20,7 @@ export class Flower {
     flower.price = payload.price;
     flower.quantity = payload.quantity;
     flower.owner = context.sender;
+    flower.sold = false;
     return flower;
   }
 

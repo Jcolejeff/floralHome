@@ -14,10 +14,14 @@ export function getFlowers() {
   return window.contract.getFlowers();
 }
 
-export function increaseQuantity({id}) {
+export function increaseQuantity({ id }) {
   return window.contract.increaseQuantity({ flowerId: id });
 }
 
 export async function buyFlower({ id, price }) {
   await window.contract.buyFlower({ flowerId: id }, GAS, price);
+}
+
+export async function sellFlower({ id }) {
+  await window.contract.sellFlower({ flowerId: id });
 }

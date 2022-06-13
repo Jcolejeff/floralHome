@@ -1,7 +1,13 @@
 import Form from "./Form";
 import { useState } from "react";
-const Body = ({ address, addFlower, flowers, buyFlowers, increaseQuantity }) => {
-
+const Body = ({
+  address,
+  addFlower,
+  flowers,
+  buyFlowers,
+  sellFlowers,
+  increaseQuantity,
+}) => {
   const handleQuantity = (flow) => {
     increaseQuantity(flow);
   };
@@ -129,7 +135,16 @@ const Body = ({ address, addFlower, flowers, buyFlowers, increaseQuantity }) => 
         {/* Three columns of text below the carousel */}
         <div className="row">
           {flowers.map(
-            ({ id, owner, name, image, description, quantity, price }) => (
+            ({
+              id,
+              owner,
+              name,
+              image,
+              description,
+              quantity,
+              price,
+              sold,
+            }) => (
               <div className="col-lg-4">
                 <img
                   style={{ borderRadius: "50%" }}
@@ -143,18 +158,32 @@ const Body = ({ address, addFlower, flowers, buyFlowers, increaseQuantity }) => 
                 <p>{description}</p>
                 <h4>Quantity: {quantity}</h4>
                 <h4>Amount: {price / 10 ** 24} NEAR</h4>
-                <div className="d-flex justify-content-between">
-                  {quantity > 0 && <p>
-                    <button
-                      onClick={() => buyFlowers(id, price)}
-                      className="btn btn-secondary"
-                    >
-                      Buy
-                    </button>
-                  </p>}
-                  {owner === address && (
-                      <p>
+                <div className="">
+                  {quantity > 0 && (
+                    <p>
+                      {!sold ? (
+                        <button
+                          style={{ width: "100%" }}
+                          onClick={() => buyFlowers(id, price)}
+                          className="btn btn-primary"
+                        >
+                          Buy
+                        </button>
+                      ) : (
+                        <button
+                          style={{ width: "100%" }}
+                          onClick={() => sellFlowers(id)}
+                          className="btn btn-danger"
+                        >
+                          Sell
+                        </button>
+                      )}
+                    </p>
+                  )}
+                  {owner === address && sold === true && (
+                    <p>
                       <button
+                        style={{ width: "100%" }}
                         onClick={() => handleQuantity({ id })}
                         className="btn btn-secondary"
                       >

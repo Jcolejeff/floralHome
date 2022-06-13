@@ -28,6 +28,7 @@ export function buyFlower(flowerId: string): void {
     ContractPromiseBatch.create(flower.owner).transfer(context.attachedDeposit);
     flower.owner = context.sender;
     flower.quantity = flower.quantity - 1;
+    flower.sold = true;
     listedFlowers.set(flower.id, flower);
 }
 
@@ -38,6 +39,15 @@ export function increaseQuantity(flowerId: string): void {
   }
   flower.quantity++;
   
+  listedFlowers.set(flower.id, flower);
+}
+
+export function sellFlower(flowerId: string): void {
+  const flower = getFlower(flowerId);
+  if (flower == null || flower.sold !== true) {
+    throw new Error("flower not found");
+  }
+  flower.sold = false;
   listedFlowers.set(flower.id, flower);
 }
 

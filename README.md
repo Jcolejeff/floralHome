@@ -1,3 +1,8 @@
+This is a simple dapp on the NEAR blockchain. I made it for the purpose of buying flowers as NFTs. Users have the capacity to increment the quantity of the flowers NFT by one to prevent overselling of the flowers. This dapp is made for everyone and anyone to use
+
+Link: https://dapper-arithmetic-33dce4.netlify.app/
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

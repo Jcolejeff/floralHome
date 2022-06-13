@@ -2,7 +2,13 @@ import React, { useCallback, useEffect, useState } from "react";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import Body from "./components/Body";
-import { getFlowers, createFlower, buyFlower, increaseQuantity } from "./utils/marketplace";
+import {
+  getFlowers,
+  createFlower,
+  buyFlower,
+  sellFlower,
+  increaseQuantity,
+} from "./utils/marketplace";
 import { login, accountBalance } from "./utils/near";
 
 function App() {
@@ -44,7 +50,7 @@ function App() {
     try {
       setLoading(true);
       const flowers = await getFlowers();
-      console.log(typeof(flowers[0].quantity));
+      console.log(typeof flowers[0].quantity);
       setFlowers(flowers);
     } catch (error) {
       console.log(error);
@@ -53,31 +59,43 @@ function App() {
     }
   };
 
-  const buyFlowers = async (id, price)=>{
-    try {
-      setLoading(true)
-      await buyFlower({id, price});
-      await getFlower()
-    } catch (error) {
-      console.log(error);
-    }finally{
-      setLoading(false)
-    }
-  }
-
-  const quantityEdit = async (flower) => {
+  const buyFlowers = async (id, price) => {
     try {
       setLoading(true);
-      const { id } = flower;
-      console.log(id);
-      await increaseQuantity({id});
+      await buyFlower({ id, price });
       await getFlower();
     } catch (error) {
       console.log(error);
     } finally {
       setLoading(false);
     }
-  }
+  };
+
+  const sellFlowers = async (id) => {
+    try {
+      setLoading(true);
+      await sellFlower({ id });
+      await getFlower();
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const quantityEdit = async (flower) => {
+    try {
+      setLoading(true);
+      const { id } = flower;
+      console.log(id);
+      await increaseQuantity({ id });
+      await getFlower();
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <>
       {loading ? (
@@ -100,6 +118,7 @@ function App() {
             addFlower={addFlower}
             flowers={flowers}
             buyFlowers={buyFlowers}
+            sellFlowers = {sellFlowers}
             increaseQuantity={quantityEdit}
           />
         </>
